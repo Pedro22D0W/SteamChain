@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: 'postgres:latest'
+    environment:
+      - 'POSTGRES_DB=steamchain'
+      - 'POSTGRES_PASSWORD=secretroot'
+      - 'POSTGRES_USER=pedro'
+    ports:
+      - '5432'
