@@ -2,26 +2,24 @@ import React from 'react';
 
 
 const cardStyle = {
+    boxShadow: 'rgba(148,0,211, 0.4) 5px 5px, rgba(148,0,211, 0.3) 10px 10px, rgba(148,0,211, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px',
     display: 'flex',
+    background: '255, 255, 255, 1',
     flexDirection: 'column',
-    width: '40%',
-    height: '40%',
-    padding: '1px 32px 24px 32px',
-    minWidth: '636px',
-    backgroundImage: 'radial-gradient(circle, #ffffff, #fafafa, #f4f4f4, #efefef, #eaeaea)',
+    padding: '1px 32px 24px ',
+    minWidth: '80vh',
     fontSize: '16px',
     letterSpacing: '2px',
     textDecoration: 'none',
     textTransform: 'uppercase',
     color: '#000',
     cursor: 'pointer',
-    border: '3px solid',
-    boxShadow: '1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px',
+    border: '1px solid',
     position: 'relative',
     userSelect: 'none',
     WebkitUserSelect: 'none',
     touchAction: 'manipulation',
-    margin: '10px',
+    margin: '10px ',
 };
 
 const CardCenter = (props) => {

@@ -35,8 +35,17 @@ const Register = () => {
       }
     }
 
+    const containerStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        pading: '100px',
+    
+      };
+
     return (
-        <div className="App">
+        <div style={containerStyle}>
             <CardCenter >
 
                 <form onSubmit={handleSubmit}>
@@ -57,6 +66,8 @@ const Register = () => {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}  />
                     </div>
+
+                    
 
                     <Button>Registrar</Button>
                 </form>

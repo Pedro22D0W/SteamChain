@@ -3,9 +3,10 @@ import React from 'react';
 const containerStyle = {
 
   borderRadius: '2px',
+  border: '1px solid #000000',
   color: '#000000',
   padding: '10px',
-  backgroundColor: '	F8F8FF',
+  backgroundColor: '#FFFFFF',
   outline: 'none',
   width: '80%',
   fontSize: '15px',
