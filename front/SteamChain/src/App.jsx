@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom'
 import Footer from './components/Footer'
 import Header from './components/Header'
 
+
+
 const containerStyle = {
   display: 'flex',
   flexDirection: 'column',
@@ -31,7 +33,13 @@ function App() {
     return (
       
       <div style={containerStyle}>
-        <Header />
+
+
+
+
+          <Header />
+        
+        
         <div id="root" style={contentStyle}>
           <Outlet />
         </div>

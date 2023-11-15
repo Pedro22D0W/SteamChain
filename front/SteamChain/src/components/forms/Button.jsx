@@ -8,7 +8,7 @@ function Button(props) {
   return (
     <div>
       <button
-        class="button-52" role="button"
+        className="button-52" role="button"
       >
         {props.children}
       </button>

@@ -39,13 +39,24 @@ import { Link } from 'react-router-dom';
 
         <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="/register">Home</Link></a>
         <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="/register">Loja</Link></a>
-        <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="/register">Registrar</Link></a>
-        <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="/register">Registrar</Link></a>
-        <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="/register">Registrar</Link></a>
-        
-      </header>
-      
-  
+        <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="/register">Market Place</Link></a>
+        <a style={fialdStyle}><Link style={{color: '#FFFFFF'}} to="https://github.com/Pedro22D0W">suporte</Link></a>
+        {
+  localStorage.getItem('token') ? (
+    <a style={fialdStyle}>
+      <Link style={{ color: '#FFFFFF' }} to="/register">
+        {localStorage.getItem('username')}
+      </Link>
+    </a>
+  ) : (
+    <a style={fialdStyle}>
+      <Link style={{ color: '#FFFFFF' }} to="/register">
+        Registrar
+      </Link>
+    </a>
+  )
+}
+      </header>      
     );
   }
   

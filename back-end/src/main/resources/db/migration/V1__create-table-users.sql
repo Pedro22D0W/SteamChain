@@ -1,6 +1,7 @@
-create table users (
-    id serial primary key,
-    user_name varchar(100),
-    password varchar(100)
-
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role TEXT NOT NULL
 );
