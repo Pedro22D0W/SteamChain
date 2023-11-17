@@ -13,13 +13,11 @@ const cardStyle = {
     textDecoration: 'none',
     textTransform: 'uppercase',
     color: '#000',
-    cursor: 'pointer',
     border: '1px solid',
     position: 'relative',
     userSelect: 'none',
     WebkitUserSelect: 'none',
     touchAction: 'manipulation',
-    margin: '10px ',
 };
 
 const CardCenter = (props) => {
