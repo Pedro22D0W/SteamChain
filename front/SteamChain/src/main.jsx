@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Login from './routes/Login.jsx';
 import Register from './routes/Register.jsx';
 import DeveloperHome from './routes/DeveloperHome.jsx';
+import GameDetails from './routes/GameDetails.jsx'
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: '/developer',
         element: <DeveloperHome />,
+      },
+      {
+        path: 'gamedetails',
+        element: <GameDetails />,
       },
     ],
   }

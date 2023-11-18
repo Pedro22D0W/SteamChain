@@ -1,4 +1,5 @@
 import ethereum from '../assets/ethereum.svg';
+import { Link } from 'react-router-dom';
 
 function PriceField(props) {
 
@@ -45,7 +46,7 @@ function PriceField(props) {
                 outline: '0',
             }}>{props.price}<img src={ethereum} alt="gaming_1" style={{maxWidth: '10px',
             margin: '0 5px 0 '}} /></a>
-            <button style={tabStyle}>comprar</button>
+            <button style={tabStyle}><Link to = "/gamedetails">Comprar</Link></button>
         </div>
     </div>
 

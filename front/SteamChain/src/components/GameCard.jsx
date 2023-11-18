@@ -30,11 +30,9 @@ const GameCard = (props) => {
 
             <img src={props.image} alt="" />
 
-            
-
-        <PriceField price={props.price} />
-            
-
+            <div>
+                {props.price && <PriceField price={props.price} />}
+            </div>
 
         </div>
     );
