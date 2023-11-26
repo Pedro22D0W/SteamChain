@@ -30,19 +30,21 @@ public class User implements UserDetails {
     }
 
 
-    public User(String username,String email,String password,UserRole role){
+    public User(String username,String email,String password,UserRole role,String wallet){
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.wallet = wallet;
     }
 
-    public User(Long Id,String username,String email,String password,UserRole role){
+    public User(Long Id,String username,String email,String password,UserRole role,String wallet){
         this.id = Id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.wallet = wallet;
     }
 
     @Id
@@ -52,6 +54,7 @@ public class User implements UserDetails {
     private String password;
     private String email;
     private UserRole role;
+    private String wallet;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

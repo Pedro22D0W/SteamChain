@@ -38,8 +38,7 @@ function App() {
 
 
           <Header />
-        
-        
+
         <div id="root" style={contentStyle}>
           <Outlet />
         </div>

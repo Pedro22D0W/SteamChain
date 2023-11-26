@@ -28,10 +28,10 @@ const GameCard = (props) => {
     return (
         <div style={cardStyle}>
 
-            <img src={props.image} alt="" />
+            <img src={props.poster} alt="" />
 
             <div>
-                {props.price && <PriceField price={props.price} />}
+                 <PriceField {...props} />
             </div>
 
         </div>

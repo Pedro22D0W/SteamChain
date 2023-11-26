@@ -4,15 +4,18 @@ import CardCenter from '../components/CardCenter';
 import InputField from '../components/forms/InputField';
 import Button from '../components/forms/Button';
 import { useState } from 'react';
-const Register = () => {
+const GameRegister = () => {
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [email, setEmail] = useState('');
+    const [name, setName] = useState('');
+    const [link_poster, setLinkPoster] = useState('');
+    const [link_trailer, setLinkTrailer] = useState('');
+    const [about, setAbout] = useState('');
+    const [price, setPrice] = useState('');
+
   const [account,setAccount] = useState(null); 
   const Navigate = useNavigate();
 
-  console.log(username, password);
+ 
   const ConectWollet = async () => {
     try {
       const { ethereum } = window;
@@ -32,49 +35,33 @@ const Register = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/auth/register', {
+      const response = await fetch('http://localhost:8080/games/post', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          username: username,
-          password: password,
-          email: email,
-          role: "USER",
-          wallet: account
+            name: name,
+            poster: link_poster,
+            trailer: link_trailer,
+            about: about,
+            wallet: account,
+            price:price
 
         }),
       });
 
-      if(response.ok) {
-        try {
-          
-          const response = await fetch('http://localhost:8080/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Origin': 'http://localhost:5173', },
-  
-          body: JSON.stringify({
-            email: email,
-            password: password
-          })
-        });
-  
-        const token = await response.json();
-        localStorage.setItem('token', token.token);
-        return Navigate('/developer');
-          
-        } catch (error) {
-          console.error(error);
-        }
-        
-  
-  
+        if(response.ok) {
+            return Navigate('/developer');
       }
 
 
     } catch (error) {
-      console.error(JSON.stringify({
-        username: username,
-        password: password
+        console.error(JSON.stringify({
+                name: name,
+                poster: link_poster,
+                trailer: link_trailer,
+                about: about,
+                wallet: account,
+                price:price
       })
         ,);
     }
@@ -93,31 +80,50 @@ const Register = () => {
         <CardCenter >
 
           <form onSubmit={handleSubmit}>
+           
             <div>
               <InputField
-                label="email"
+                label="Nome"
                 type="text"
-                placeholder="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)} />
+                placeholder="Nome"
+                value={name}
+                onChange={(e) => setName(e.target.value)} />
             </div>
             <div>
               <InputField
-                label="username"
+                label="Link do poster"
                 type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)} />
+                placeholder="Link do poster"
+                value={link_poster}
+                onChange={(e) => setLinkPoster(e.target.value)} />
+            </div>
+            <div>
+              <InputField
+                label="Link do trailer"
+                type="text"
+                placeholder="Link do trailer"
+                value={link_trailer}
+                onChange={(e) => setLinkTrailer(e.target.value)} />
+            </div>
+            <div>
+              <InputField
+                label="Sobre"
+                type="text"
+                placeholder="Sobre"
+                value={about}
+                onChange={(e) => setAbout(e.target.value)} />
+            </div>
+            <div>
+              <InputField
+                label="Preço"
+                type="text"
+                placeholder="Preço"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)} />
             </div>
 
-            <div>
-              <InputField
-                label="Senha"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)} />
-            </div>
+
+           
             <div>
               <InputField
                 label="Carteira"
@@ -140,4 +146,4 @@ const Register = () => {
 
 
 
-export default Register;
+export default GameRegister;

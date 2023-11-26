@@ -1,5 +1,4 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import CardCenter from '../components/CardCenter';
@@ -8,47 +7,43 @@ import { Link } from 'react-router-dom';
 import TabContainer from '../components/Tabs';
 import GameCard from '../components/GameCard';
 import ReactPlayer from 'react-player';
+import { useParams } from 'react-router-dom';
 
-const GameDetails = () => {
-    const [user, setUser] = useState(null);
 
-    const obterDadosDoBanco = async () => {
 
-        const token = localStorage.getItem('token');
 
+const GameDetails = (props) => {
+    const { id } = useParams();
+    const [Game, setGames] = useState(null);
+    const FindGame = async () => {
         try {
-
-            const response = await fetch('http://localhost:8080/user/developer', {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-
-                const userData = await response.json();
-                localStorage.setItem('username', userData.username);
-                setUser(userData);
-
-            } else {
-                console.error('Erro ao obter dados do banco:', response.status);
-            }
+    
+          const response = await fetch(`http://localhost:8080/games/getdetails/${id}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+    
+          if (response.ok) {
+    
+            const Game = await response.json();
+            setGames(Game);
+            console.log(Game);
+    
+          } else {
+            console.error('Erro ao obter dados do banco:', response.status);
+          }
         } catch (error) {
-            console.error('Erro ao obter dados do banco:', token);
+          console.error('Erro ao obter dados do banco:', token);
+          con
         }
-    };
-
-    const [aba, setAba] = useState(1);
-
-    const ChangeAba = (aba) => {
-        setAba(aba);
-    };
+      };
+    
 
     // Use o useEffect para chamar a função quando o componente for montado
     useEffect(() => {
-        obterDadosDoBanco();
+        FindGame();
     }, []);
 
     const tabStyle = {
@@ -105,15 +100,16 @@ const GameDetails = () => {
                     <div style={{ display: 'flex', flexDirection: 'row', alignContent: "center", margin:"0 0 5vh 0" }}>
 
                         <div style = {{ display: 'flex', flexDirection: ' column', }}>
-                            <GameCard image="https://cdn1.epicgames.com/spt-assets/2d4f1465e9254425b5b03c8a429d4d9b/oirbo-ffbg6.png?h=480&quality=medium&resize=1&w=360" />
+                            <GameCard image={Game?.poster} />
                            
                             <Button> Comprar </Button>
+                            
                            
                         </div>      
 
                         <div sytle = {{ margin:"20vh" }}>
                             <ReactPlayer
-                                url='https://youtu.be/rE2KbXal65E'
+                                url={Game?.trailer}
                                 width='220%'
                                 height='105%'
                                 margin='0 0 0 0'
@@ -127,11 +123,10 @@ const GameDetails = () => {
                     
                     <CardCenter>
                     <div style={{ display: 'flex', flexDirection: ' column', padding: '8vh',maxHeight: "20vn"}}>
-                        <h1>Oirbo</h1>
-                        <a>orbo é um jgo com uma paleta de cores que eu achei parecida com a do site em geral
-                            por isso descido usar ele de modeloto escrevendo uma sinopse agora pra definir o layout da aplicação 
-                        </a>
-                    
+                        <h1>{Game?.name}</h1>
+                        <a>{Game?.about}</a>
+                        
+                        
                     </div>
                    </CardCenter>
                    </div>
