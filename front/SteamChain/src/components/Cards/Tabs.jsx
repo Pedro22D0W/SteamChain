@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from './forms/Button';
+import Button from '../forms/Button';
 
 const TabContainer = () => {
   const [activeTab, setActiveTab] = useState(1);

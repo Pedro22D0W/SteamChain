@@ -1,21 +1,23 @@
 import React from 'react';
 import { Link,useNavigate } from 'react-router-dom';
-import CardCenter from '../components/CardCenter';
+import CardCenter from '../components/Cards/CardCenter';
 import InputField from '../components/forms/InputField';
 import Button from '../components/forms/Button';
+import { createGame } from '../Service/DataService.js';
+
 import { useState } from 'react';
 const GameRegister = () => {
+  const navigate = useNavigate();
 
     const [name, setName] = useState('');
-    const [link_poster, setLinkPoster] = useState('');
-    const [link_trailer, setLinkTrailer] = useState('');
+    const [poster, setLinkPoster] = useState('');
+    const [trailer, setLinkTrailer] = useState('');
     const [about, setAbout] = useState('');
     const [price, setPrice] = useState('');
 
   const [account,setAccount] = useState(null); 
-  const Navigate = useNavigate();
 
- 
+
   const ConectWollet = async () => {
     try {
       const { ethereum } = window;
@@ -24,46 +26,23 @@ const GameRegister = () => {
         params: []
       });
       setAccount(response[0]);
-  
       setAccount(response[0]);
     } catch (error) {
       console.error("Erro ao conectar a carteira:", error);
     }
   }
 
-  const handleSubmit = async (event) => {
+  const submitGame= async (event) => {
     event.preventDefault();
-
     try {
-      const response = await fetch('http://localhost:8080/games/post', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: name,
-            poster: link_poster,
-            trailer: link_trailer,
-            about: about,
-            wallet: account,
-            price:price
-
-        }),
-      });
-
-        if(response.ok) {
-            return Navigate('/developer');
-      }
-
+      const data = JSON.stringify({name,poster,trailer,about,wallet:account,price});
+      console.log(data);
+      const result = await createGame({
+        data
+      },navigate);
 
     } catch (error) {
-        console.error(JSON.stringify({
-                name: name,
-                poster: link_poster,
-                trailer: link_trailer,
-                about: about,
-                wallet: account,
-                price:price
-      })
-        ,);
+        console.error(error);
     }
   };  
     const containerStyle = {
@@ -79,7 +58,7 @@ const GameRegister = () => {
       <div style={containerStyle}>
         <CardCenter >
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={submitGame}>
            
             <div>
               <InputField
@@ -94,7 +73,7 @@ const GameRegister = () => {
                 label="Link do poster"
                 type="text"
                 placeholder="Link do poster"
-                value={link_poster}
+                value={poster}
                 onChange={(e) => setLinkPoster(e.target.value)} />
             </div>
             <div>
@@ -102,7 +81,7 @@ const GameRegister = () => {
                 label="Link do trailer"
                 type="text"
                 placeholder="Link do trailer"
-                value={link_trailer}
+                value={trailer}
                 onChange={(e) => setLinkTrailer(e.target.value)} />
             </div>
             <div>

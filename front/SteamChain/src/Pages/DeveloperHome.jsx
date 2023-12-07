@@ -1,17 +1,10 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+
 import { useEffect } from 'react';
 import { useState } from 'react';
-import CardCenter from '../components/CardCenter';
+import CardCenter from '../components/Cards/CardCenter';
 import Button from '../components/forms/Button';
 import { Link } from 'react-router-dom';
-import TabContainer from '../components/Tabs';
-import GameCard from '../components/GameCard';
-
-
-
-
-
+import GameCard from '../components/Cards/GameCard';
 
 const DeveloperHome = () => {
   const [user, setUser] = useState(null);
@@ -65,7 +58,7 @@ const DeveloperHome = () => {
         console.error('Erro ao obter dados do banco:', response.status);
       }
     } catch (error) {
-      console.error('Erro ao obter dados do banco:', token);
+      console.error('Erro ao obter dados do banco:');
     }
   };
 
@@ -120,8 +113,10 @@ const DeveloperHome = () => {
 
       <CardCenter style={{ margin: '100px ', }}>
         {aba === 1 && (
-          <div>
-            <GameCard image = "https://cdn1.epicgames.com/spt-assets/2d4f1465e9254425b5b03c8a429d4d9b/oirbo-ffbg6.png?h=480&quality=medium&resize=1&w=360" price ='0.001' />
+          <div style={{ display: 'flex', flexDirection: 'row' }}>
+            {Games?.map((game) => (
+              <GameCard {...game} />
+            ))}
           </div>
 
         )}

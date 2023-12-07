@@ -1,15 +1,10 @@
-import React, { useState } from 'react';
-import button from './button.css';
-
-
+import button from './Style/ButtonStyle.css';
 
 function Button(props) {
 
   return (
     <div>
-      <button
-        className="button-52" role="button"
-      >
+      <button className="button-52" role="button">
         {props.children}
       </button>
     </div>
