@@ -1,8 +1,7 @@
 package com.steamchain.SteamChain.controller;
+
 import jakarta.annotation.security.PermitAll;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import com.steamchain.SteamChain.Games.Game;
 import com.steamchain.SteamChain.Games.GameRegisterDTO;
 import com.steamchain.SteamChain.Games.GameRepository;
 import com.steamchain.SteamChain.Games.GameResponseDTO;
-
 
 @RestController
 @RequestMapping("games")
@@ -23,32 +21,25 @@ public class GamesController {
     private GameRepository repository;
 
     @GetMapping("/all")
-        public List<GameResponseDTO>  getGames(){
+    public List<GameResponseDTO> getGames() {
         List<GameResponseDTO> Games_List = repository.findAll().stream().map(GameResponseDTO::new).toList();
         return Games_List;
     }
-    
+
     @GetMapping("getdetails/{id}")
-    public GameResponseDTO getGame(@PathVariable Long id){
+    public GameResponseDTO getGame(@PathVariable Long id) {
         GameResponseDTO game = new GameResponseDTO(repository.findByid(id));
         return game;
     }
-    @PostMapping ("/post")
 
-    public ResponseEntity<String> postGame(@RequestBody GameRegisterDTO gameRegisterDTO ){
+    @PostMapping("/create")
+
+    public ResponseEntity<String> postGame(@RequestBody GameRegisterDTO gameRegisterDTO) {
 
         Game newGame = new Game(gameRegisterDTO);
         this.repository.save(newGame);
 
         return new ResponseEntity<>("Post criado com sucesso!", HttpStatus.CREATED);
     }
-    @PutMapping("/games/{id}")
-    public String putGame(@PathVariable("id") String id){
-        return "game";
-    }
-    @DeleteMapping("/games/{id}")
-    public String deleteGame(@PathVariable("id") String id){
-        return "game";
-    }
-    
+
 }

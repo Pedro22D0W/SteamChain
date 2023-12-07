@@ -18,19 +18,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@Profile("!secure")
+@Profile("no-security")
 public class SecurityConfigurations {
     @Autowired
     SecurityFilter securityFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .cors()
-                .and()
+        .cors()
+        .and()
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET,"/user/developer").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/user/all").permitAll()
+                        .requestMatchers(HttpMethod.POST,"/user/buy/{user_id}/{game_id}").permitAll()
                         .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET,"/auth/login").permitAll()
                         .requestMatchers(HttpMethod.GET,"/auth/register").permitAll()
@@ -39,7 +41,7 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET,"/games/all").permitAll()
                         .requestMatchers(HttpMethod.GET,"/games/getdetails/{id}").permitAll()
 
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter,UsernamePasswordAuthenticationFilter.class)
                 .build();

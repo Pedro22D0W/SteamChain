@@ -1,4 +1,5 @@
 package com.steamchain.SteamChain.User;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,7 +7,8 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import com.steamchain.SteamChain.Games.Game;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,8 +31,7 @@ public class User implements UserDetails {
 
     }
 
-
-    public User(String username,String email,String password,UserRole role,String wallet){
+    public User(String username, String email, String password, UserRole role, String wallet) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -38,13 +39,16 @@ public class User implements UserDetails {
         this.wallet = wallet;
     }
 
-    public User(Long Id,String username,String email,String password,UserRole role,String wallet){
+    public User(Long Id, String username, String email, String password, UserRole role, String wallet) {
         this.id = Id;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
         this.wallet = wallet;
+        if (games == null) {
+            games = new ArrayList<>();
+        }
     }
 
     @Id
@@ -56,16 +60,18 @@ public class User implements UserDetails {
     private UserRole role;
     private String wallet;
 
+    @ManyToMany
+    @JoinTable(name = "user_game", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
+    private List<Game> games;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.role == UserRole.DEVELOPER){
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
-        }
-        else{
-            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),new SimpleGrantedAuthority("ROLE_USER"));
+        if (this.role == UserRole.DEVELOPER) {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
+        } else {
+            return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
         }
     }
-
 
     @Override
     public String getPassword() {
@@ -75,6 +81,14 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
     }
 
     @Override
@@ -97,9 +111,8 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void setPurchasedGames(List<Game> purchasedGames) {
+        this.games = purchasedGames;
+    }
 
 }
-
-
-
-
