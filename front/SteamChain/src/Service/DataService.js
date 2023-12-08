@@ -35,13 +35,31 @@ export const getGameDetails = async (id) => {
   }
 };
 
-export const getGames = async (id) => {
+export const getGames = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/games/all`, {
       headers: {
         'Content-Type': 'application/json',
       },
     });
+    console.log(response.data)
+    return response.data;
+    
+  } catch (error) {
+    console.error('Erro ao obter os jogos:', error);
+    return null;
+  }
+};
+
+export const getUserGames = async (token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/user/usergames`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
     console.log(response.data)
     return response.data;
     

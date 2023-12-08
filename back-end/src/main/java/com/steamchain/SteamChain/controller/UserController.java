@@ -43,10 +43,13 @@ public class UserController {
         return "Compra realizada com sucesso!";
     }
 
-    @GetMapping("/usergames/{user_id}")
+    @GetMapping("/usergames")
     @Transactional
-        public List<GameResponseDTO> userGames(@PathVariable Long user_id){
-            User user = repository.findByid(user_id);
+        public List<GameResponseDTO> userGames(Authentication authentication){
+            String username = authentication.getName();
+            User user = repository.findByUsername(username);
+
+            //User user = repository.findByid(user_id);
             List<GameResponseDTO> Games_List = GameRepository.findByUsers(user).stream().map(GameResponseDTO::new).toList();
             return Games_List;
         }

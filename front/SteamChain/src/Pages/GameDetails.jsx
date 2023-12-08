@@ -3,17 +3,21 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import CardCenter from '../components/Cards/CardCenter';
 import Button from '../components/forms/Button';
-import { Link } from 'react-router-dom';
-import TabContainer from '../components/Cards/Tabs';
 import GameCard from '../components/Cards/GameCard';
 import ReactPlayer from 'react-player';
 import { useParams } from 'react-router-dom';
 import { getGameDetails } from '../Service/DataService.js';
+import { buy } from '../Service/StoreService.js';
+import { Link, useNavigate } from "react-router-dom";
+import { verify } from '../Service/StoreService.js';
 
 
 const GameDetails = (props) => {
+    
+    const Navigate = useNavigate();
     const { id } = useParams();
     const [Game, setGame] = useState(null);
+    const [userHasGame, setUserHasGame] = useState(false);
 
     const getDetails = async () => {
       try {
@@ -24,9 +28,31 @@ const GameDetails = (props) => {
         console.error('Erro ao obter dados:', error);
       }
     };
-    
+
+    const buyGame = async () => {
+        try {
+            const response = await buy(id, localStorage.getItem('userId'));
+            if (response) {
+                return Navigate('/developer');
+            }
+        } catch (error) {
+            console.error("Erro ao efetuar a compra:", error);
+        }
+    }
+    const HasGame = async () => {
+        try {
+            const response = await verify(localStorage.getItem('userId'),id);
+            if (response) {
+                setUserHasGame(true);
+            }
+        } catch (error) {
+            console.error("Erro ao verificar se o usuário possui o jogo:", error);
+        }
+    }
+
     useEffect(() => {
        getDetails();
+       HasGame();
     }, [id]);
    
     return (
@@ -40,8 +66,13 @@ const GameDetails = (props) => {
                         <div style = {{ display: 'flex', flexDirection: ' column', }}>
                             <GameCard image={Game?.poster} />
                            
-                            <Button> Comprar </Button>
-                            
+                           
+                            { !userHasGame && (
+                                <Button onClick={() => buyGame()}>Comprar</Button>
+                            )}                     
+                            { userHasGame && (
+                                <Button onClick={() => dowloadGame()}>Download</Button>
+                            )}
                            
                         </div>      
 

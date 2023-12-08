@@ -5,14 +5,27 @@ import CardCenter from '../components/Cards/CardCenter';
 import Button from '../components/forms/Button';
 import { Link } from 'react-router-dom';
 import GameCard from '../components/Cards/GameCard';
-import { getGames, getUser } from '../Service/DataService.js';
+import { getGames, getUser,getUserGames } from '../Service/DataService.js';
 import './Style/DeveloperHomeStyle.css';
 
 
 const DeveloperHome = () => {
   const [user, setUser] = useState(null);
   const [Games, setGames] = useState(null);
+  const [UserGames, setUserGames] = useState(null);
 
+  const FindUser = async () => {
+    try {
+      const response = await getUser(localStorage.getItem('token'));
+      setUser(response);
+      localStorage.setItem('userId', response.id);
+      console.log(localStorage.getItem('userId'));
+      }
+      catch (error) {
+      console.error('Erro ao obter dados do banco:');
+    }
+  }
+  
   const FindGames = async () => {
     try {
       const response = await getGames();
@@ -23,10 +36,10 @@ const DeveloperHome = () => {
     }
   }
 
-  const FindUser = async () => {
+  const FindUserGames = async () => {
     try {
-      const response = await getUser(localStorage.getItem('token'));
-      setUser(response);
+      const response = await getUserGames(localStorage.getItem('token'));
+      setUserGames(response);
       }
       catch (error) {
       console.error('Erro ao obter dados do banco:');
@@ -42,6 +55,7 @@ const DeveloperHome = () => {
   // Use o useEffect para chamar a função quando o componente for montado
   useEffect(() => {
     FindUser();
+    FindUserGames();
     FindGames();
   }, []);
 
@@ -68,7 +82,7 @@ const DeveloperHome = () => {
       <CardCenter style={{ margin: '100px ', }}>
         {aba === 1 && (
           <div style={{ display: 'flex', flexDirection: 'row' }}>
-            {Games?.map((game) => (
+            {UserGames?.map((game) => (
               <GameCard {...game} />
             ))}
           </div>
