@@ -34,7 +34,7 @@ public class GamesController {
 
     @PostMapping("/create")
 
-    public ResponseEntity postGame(@RequestBody GameRegisterDTO gameRegisterDTO) {
+    public ResponseEntity<String> postGame(@RequestBody GameRegisterDTO gameRegisterDTO) {
 
         Game newGame = new Game(gameRegisterDTO);
         this.repository.save(newGame);

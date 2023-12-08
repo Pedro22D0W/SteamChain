@@ -1,15 +1,17 @@
 import React from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CardCenter from '../components/Cards/CardCenter';
 import InputField from '../components/forms/InputField';
 import Button from '../components/forms/Button';
 import { useState } from 'react';
+import "./Style/RegisterStyle.css"
+import { register } from '../Service/AuthService.js';
 const Register = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  const [account,setAccount] = useState(null); 
+  const [account, setAccount] = useState(null);
   const Navigate = useNavigate();
 
   console.log(username, password);
@@ -21,78 +23,30 @@ const Register = () => {
         params: []
       });
       setAccount(response[0]);
-  
-      setAccount(response[0]);
     } catch (error) {
       console.error("Erro ao conectar a carteira:", error);
     }
   }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const submitRegister = async () => {
     try {
-      const response = await fetch('http://localhost:8080/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-          email: email,
-          role: "USER",
-          wallet: account
-
-        }),
-      });
-
-      if(response.ok) {
-        try {
-          
-          const response = await fetch('http://localhost:8080/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Origin': 'http://localhost:5173', },
-  
-          body: JSON.stringify({
-            email: email,
-            password: password
-          })
-        });
-  
-        const token = await response.json();
-        localStorage.setItem('token', token.token);
-        return Navigate('/developer');
-          
-        } catch (error) {
-          console.error(error);
-        }
-        
-  
-  
+      const role = "USER";
+      const response = await register(username,password,email,role,account);
+      console.log(response);
+      if (response) {
+        return Navigate('/');
       }
-
-
     } catch (error) {
-      console.error(JSON.stringify({
-        username: username,
-        password: password
-      })
-        ,);
+      console.error("Erro ao efetuar registro:", error);
     }
-  };  
-    const containerStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      pading: '100px',
 
-    };
+  };
 
     return (
-      <div style={containerStyle}>
+      <div className='register-container-style'>
         <CardCenter >
 
-          <form onSubmit={handleSubmit}>
+          <div>
             <div>
               <InputField
                 label="email"
@@ -125,12 +79,12 @@ const Register = () => {
                 placeholder={account}
                 value={account}
                 onChange={(e) => setAccount(e.target.value)} />
-                <button type='button' className="button-52" role="button" onClick={() => ConectWollet()}>Conectar Carteira </button>
+              <button type='button' className="button-52" role="button" onClick={() => ConectWollet()}>Conectar Carteira </button>
             </div>
 
-            <Button>Registrar</Button>
-          </form>
-          
+            <Button onClick={() => submitRegister()}>Registrar</Button>
+          </div>
+
         </CardCenter>
 
       </div>
@@ -140,4 +94,4 @@ const Register = () => {
 
 
 
-export default Register;
+  export default Register;

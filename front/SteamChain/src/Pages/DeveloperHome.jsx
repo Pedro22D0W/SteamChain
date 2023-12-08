@@ -5,64 +5,33 @@ import CardCenter from '../components/Cards/CardCenter';
 import Button from '../components/forms/Button';
 import { Link } from 'react-router-dom';
 import GameCard from '../components/Cards/GameCard';
+import { getGames, getUser } from '../Service/DataService.js';
+import './Style/DeveloperHomeStyle.css';
+
 
 const DeveloperHome = () => {
   const [user, setUser] = useState(null);
   const [Games, setGames] = useState(null);
 
-  const obterDadosDoBanco = async () => {
-
-    const token = localStorage.getItem('token');
-
-    try {
-
-      const response = await fetch('http://localhost:8080/user/developer', {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-
-        const userData = await response.json();
-        localStorage.setItem('username', userData.username);
-        setUser(userData);
-
-      } else {
-        console.error('Erro ao obter dados do banco:', response.status);
-      }
-    } catch (error) {
-      console.error('Erro ao obter dados do banco:', token);
-    }
-  };
-
   const FindGames = async () => {
     try {
-
-      const response = await fetch('http://localhost:8080/games/all', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-
-        const Games = await response.json();
-        setGames(Games);
-        console.log(Games);
-
-      } else {
-        console.error('Erro ao obter dados do banco:', response.status);
+      const response = await getGames();
+      setGames(response);
       }
-    } catch (error) {
+      catch (error) {
       console.error('Erro ao obter dados do banco:');
     }
-  };
+  }
 
-  
+  const FindUser = async () => {
+    try {
+      const response = await getUser(localStorage.getItem('token'));
+      setUser(response);
+      }
+      catch (error) {
+      console.error('Erro ao obter dados do banco:');
+    }
+  }
 
   const [aba, setAba] = useState(1);
 
@@ -72,24 +41,9 @@ const DeveloperHome = () => {
 
   // Use o useEffect para chamar a função quando o componente for montado
   useEffect(() => {
-    obterDadosDoBanco();
+    FindUser();
     FindGames();
   }, []);
-
-  const tabStyle = {
-    fontSize: '16px',
-    fontWeight: '200',
-    letterSpacing: '1px',
-    padding: '13px 20px 13px',
-    outline: '0',
-    border: '1px solid black',
-    cursor: 'pointer',
-    position: 'relative',
-    backgroundColor: '#a482f3',
-    userSelect: 'none',
-    WebkitUserSelect: 'none',
-    touchAction: 'manipulation',
-  };
 
   return (
     <div className="App">
@@ -97,15 +51,15 @@ const DeveloperHome = () => {
       <div style={{ display: 'flex', flexDirection: 'row' }}>
 
         <div>
-          <button onClick={() => ChangeAba(1)} style={tabStyle}>
+          <button className='tab-style' onClick={() => ChangeAba(1)}>
             COMPRADOS</button>
         </div>
         <div>
-          <button onClick={() => ChangeAba(2)} style={tabStyle}>
+          <button className='tab-style' onClick={() => ChangeAba(2)}>
             PUBLICADOS</button>
         </div>
         <div>
-          <button onClick={() => ChangeAba(3)} style={tabStyle}>
+          <button className='tab-style' onClick={() => ChangeAba(3)}>
             LOJA</button>
         </div>
 

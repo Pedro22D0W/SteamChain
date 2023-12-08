@@ -1,5 +1,4 @@
 package com.steamchain.SteamChain.controller;
-
 import com.steamchain.SteamChain.User.*;
 import com.steamchain.SteamChain.servicies.UserService;
 import jakarta.annotation.security.PermitAll;
@@ -23,6 +22,7 @@ public class UserController {
     public ResponseEntity<UserResponseDTO> obterDadosDoBanco(Authentication authentication) {
         // Obter informações do usuário a partir do objeto Authentication
         String username = authentication.getName();
+        System.out.println(username);
         UserResponseDTO userResponseDTO = new UserResponseDTO(repository.findByUsername(username));
 
         return ResponseEntity.ok(userResponseDTO);

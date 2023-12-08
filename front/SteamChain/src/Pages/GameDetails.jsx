@@ -15,22 +15,18 @@ const GameDetails = (props) => {
     const { id } = useParams();
     const [Game, setGame] = useState(null);
 
-    const fetchData = async () => {
+    const getDetails = async () => {
       try {
         const gameData = await getGameDetails(id);
-        
-  
-        if (gameData) {
-          setGame(gameData);
-        }
-  
+        setGame(gameData);
+
       } catch (error) {
         console.error('Erro ao obter dados:', error);
       }
     };
     
     useEffect(() => {
-       fetchData();
+       getDetails();
     }, [id]);
    
     return (

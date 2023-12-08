@@ -1,0 +1,13 @@
+.login-container-style {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row; 
+  
+}
+
+.image-style {
+  max-width: 100%;
+  max-height: 110vh;
+
+}

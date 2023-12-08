@@ -1,0 +1,7 @@
+.register-container-style{
+    display: flex;
+    padding: 100px;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}

@@ -2,6 +2,22 @@ import axios from 'axios';
 
 
 const API_BASE_URL = 'http://localhost:8080';
+export const getUser = async (token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/user/developer`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    return response.data;
+    
+  } catch (error) {
+    console.error('Erro ao obter dados do jogo:', error);
+    return null;
+  }
+};
 
 
 export const getGameDetails = async (id) => {
@@ -19,23 +35,35 @@ export const getGameDetails = async (id) => {
   }
 };
 
-export const createGame = async ( data) => {
+export const getGames = async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/games/all`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    console.log(response.data)
+    return response.data;
+    
+  } catch (error) {
+    console.error('Erro ao obter os jogos:', error);
+    return null;
+  }
+};
+
+export const createGame = async (name,poster,trailer,about,wallet,price) => {
     try {
-        console.log(data);
+       
+      const data =JSON.stringify({ name,poster,trailer,about,wallet,price});
+      console.log(data)
         const response = await axios.post(
-            `${API_BASE_URL}/games/create`,
-            data,
+            `${API_BASE_URL}/games/create`,data
+           ,
             {
         headers: {
             'Content-Type': 'application/json',
         },
         });
-
-    
-    
-       // if (response.status === 200) {
-        //    navigate('/developer');
-     //  }
     
     } catch (error) {
         console.error('Erro ao obter dados do jogo:', error);   

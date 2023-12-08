@@ -1,7 +1,8 @@
 package com.steamchain.SteamChain.User;
-
-public record UserResponseDTO(Long id, String username, String password, UserRole role, String userPassword, String wallet) {
+import java.util.*;
+import com.steamchain.SteamChain.Games.Game;
+public record UserResponseDTO(Long id, String username, String email, UserRole role, String userPassword, String wallet, List<Game> games) {
     public UserResponseDTO(User user){
-        this(user.getId(), user.getUsername(), user.getEmail(),user.getRole(),user.getPassword(),user.getWallet());
+        this(user.getId(), user.getUsername(), user.getEmail(),user.getRole(),user.getPassword(),user.getWallet(),user.getGames());
     }
 }

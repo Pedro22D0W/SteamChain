@@ -3,21 +3,21 @@ import { Link,useNavigate } from 'react-router-dom';
 import CardCenter from '../components/Cards/CardCenter';
 import InputField from '../components/forms/InputField';
 import Button from '../components/forms/Button';
-import { createGame } from '../Service/DataService.js';
-
 import { useState } from 'react';
+import { createGame } from '../Service/DataService.js';
+import  './Style/GameRegisterStyle.css'
 const GameRegister = () => {
-  const navigate = useNavigate();
 
     const [name, setName] = useState('');
-    const [poster, setLinkPoster] = useState('');
-    const [trailer, setLinkTrailer] = useState('');
+    const [link_poster, setLinkPoster] = useState('');
+    const [link_trailer, setLinkTrailer] = useState('');
     const [about, setAbout] = useState('');
     const [price, setPrice] = useState('');
 
   const [account,setAccount] = useState(null); 
+  const Navigate = useNavigate();
 
-
+ 
   const ConectWollet = async () => {
     try {
       const { ethereum } = window;
@@ -32,34 +32,21 @@ const GameRegister = () => {
     }
   }
 
-  const submitGame= async (event) => {
-    event.preventDefault();
+  const create = async (event) => {
     try {
-      const data = JSON.stringify({name,poster,trailer,about,wallet:account,price});
-      console.log(data);
-      const result = await createGame({
-        data
-      },navigate);
-
+      event.preventDefault();
+      const response = await createGame(name, link_poster, link_trailer, about, account, price);
+      return Navigate('/developer');
+      
     } catch (error) {
-        console.error(error);
+      console.error('Erro ao obter dados:', error);
     }
-  };  
-    const containerStyle = {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh',
-      pading: '100px',
-
-    };
+  };
 
     return (
-      <div style={containerStyle}>
+      <div className='game-register-container-style'>
         <CardCenter >
-
-          <form onSubmit={submitGame}>
-           
+          <form onSubmit={create}>
             <div>
               <InputField
                 label="Nome"
@@ -73,7 +60,7 @@ const GameRegister = () => {
                 label="Link do poster"
                 type="text"
                 placeholder="Link do poster"
-                value={poster}
+                value={link_poster}
                 onChange={(e) => setLinkPoster(e.target.value)} />
             </div>
             <div>
@@ -81,7 +68,7 @@ const GameRegister = () => {
                 label="Link do trailer"
                 type="text"
                 placeholder="Link do trailer"
-                value={trailer}
+                value={link_trailer}
                 onChange={(e) => setLinkTrailer(e.target.value)} />
             </div>
             <div>
@@ -100,9 +87,6 @@ const GameRegister = () => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)} />
             </div>
-
-
-           
             <div>
               <InputField
                 label="Carteira"
@@ -112,12 +96,9 @@ const GameRegister = () => {
                 onChange={(e) => setAccount(e.target.value)} />
                 <button type='button' className="button-52" role="button" onClick={() => ConectWollet()}>Conectar Carteira </button>
             </div>
-
             <Button>Registrar</Button>
           </form>
-          
         </CardCenter>
-
       </div>
     );
   };
