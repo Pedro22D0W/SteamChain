@@ -6,6 +6,7 @@ import Button from "../components/forms/Button";
 import gaming_1 from "../assets/gaming_1.svg";
 import { useState } from "react";
 import { login } from "../Service/AuthService.js";
+import { useEffect } from "react";
 import "./Style/LoginStyle.css";
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +20,11 @@ const Login = () => {
       console.error("Erro ao efetuar login:", error);
     }
   };
+
+  useEffect(() => {
+   localStorage.clear();
+  }, []);
+
 
   return (
     <div className="login-container-style">

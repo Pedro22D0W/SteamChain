@@ -32,7 +32,7 @@ const DeveloperHome = () => {
       setGames(response);
       }
       catch (error) {
-      console.error('Erro ao obter dados do banco:');
+      console.error('Erro ao encorar os jogos:');
     }
   }
 
@@ -40,6 +40,7 @@ const DeveloperHome = () => {
     try {
       const response = await getUserGames(localStorage.getItem('token'));
       setUserGames(response);
+      console.log(response);
       }
       catch (error) {
       console.error('Erro ao obter dados do banco:');
@@ -83,7 +84,7 @@ const DeveloperHome = () => {
         {aba === 1 && (
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             {UserGames?.map((game) => (
-              <GameCard {...game} />
+              <GameCard key={game.id} image={game?.poster} {...game} />
             ))}
           </div>
 
@@ -100,11 +101,11 @@ const DeveloperHome = () => {
 
         {aba === 3 && (
           <div>
-            <h1>LOJA</h1>
+            <h1>LOJA!</h1>
 
             <div style={{ display: 'flex', flexDirection: 'row' }}>
               {Games?.map((game) => (
-              <GameCard {...game} />
+              <GameCard image={game?.poster} {...game} />
             ))}
             </div>
             

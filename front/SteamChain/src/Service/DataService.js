@@ -2,11 +2,12 @@ import axios from 'axios';
 
 
 const API_BASE_URL = 'http://localhost:8080';
-export const getUser = async (token) => {
+
+export const getUser = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/user/developer`, {
       headers: {
-        'Authorization': `Bearer ${token}`,
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     });
@@ -14,7 +15,8 @@ export const getUser = async (token) => {
     return response.data;
     
   } catch (error) {
-    console.error('Erro ao obter dados do jogo:', error);
+    console.error('Erro na requisição do usuario:', error);
+    console.log(localStorage.getItem('token'))
     return null;
   }
 };
@@ -24,13 +26,14 @@ export const getGameDetails = async (id) => {
   try {
     const response = await axios.get(`${API_BASE_URL}/games/getdetails/${id}`, {
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     });
 
     return response.data;
   } catch (error) {
-    console.error('Erro ao obter dados do jogo:', error);
+    console.error('Jogo não encontrado:', error);
     return null;
   }
 };
@@ -39,6 +42,7 @@ export const getGames = async () => {
   try {
     const response = await axios.get(`${API_BASE_URL}/games/all`, {
       headers: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
         'Content-Type': 'application/json',
       },
     });
@@ -79,6 +83,7 @@ export const createGame = async (name,poster,trailer,about,wallet,price) => {
            ,
             {
         headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
             'Content-Type': 'application/json',
         },
         });

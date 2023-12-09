@@ -7,9 +7,9 @@ import GameCard from '../components/Cards/GameCard';
 import ReactPlayer from 'react-player';
 import { useParams } from 'react-router-dom';
 import { getGameDetails } from '../Service/DataService.js';
-import { buy } from '../Service/StoreService.js';
+import { buy, download, verify } from '../Service/StoreService.js';
 import { Link, useNavigate } from "react-router-dom";
-import { verify } from '../Service/StoreService.js';
+
 
 
 const GameDetails = (props) => {
@@ -41,6 +41,7 @@ const GameDetails = (props) => {
     }
     const HasGame = async () => {
         try {
+           
             const response = await verify(localStorage.getItem('userId'),id);
             if (response) {
                 setUserHasGame(true);
@@ -49,6 +50,19 @@ const GameDetails = (props) => {
             console.error("Erro ao verificar se o usuário possui o jogo:", error);
         }
     }
+
+    const downloadGame = async () => {
+        try {
+            
+            const response = await download();
+            if (response) {
+                setUserHasGame(true);
+            }
+        } catch (error) {
+            console.error("Erro ao verificar se o usuário possui o jogo:", error);
+        }
+    }
+
 
     useEffect(() => {
        getDetails();
@@ -71,7 +85,7 @@ const GameDetails = (props) => {
                                 <Button onClick={() => buyGame()}>Comprar</Button>
                             )}                     
                             { userHasGame && (
-                                <Button onClick={() => dowloadGame()}>Download</Button>
+                                <Button onClick={() => downloadGame()}>Download</Button>
                             )}
                            
                         </div>      

@@ -6,11 +6,8 @@ import com.steamchain.SteamChain.User.*;
 import com.steamchain.SteamChain.servicies.UserService;
 import jakarta.annotation.security.PermitAll;
 import jakarta.transaction.Transactional;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,13 +24,12 @@ public class UserController {
     private GameRepository GameRepository;
 
     @GetMapping("/developer")
-    public ResponseEntity<UserResponseDTO> obterDadosDoBanco(Authentication authentication) {
+    public UserResponseDTO obterDadosDoBanco(Authentication authentication) {
         // Obter informações do usuário a partir do objeto Authentication
         String username = authentication.getName();
-        System.out.println(username);
         UserResponseDTO userResponseDTO = new UserResponseDTO(repository.findByUsername(username));
 
-        return ResponseEntity.ok(userResponseDTO);
+        return userResponseDTO;
     }
 
     @PostMapping("/buy/{user_id}/{game_id}")

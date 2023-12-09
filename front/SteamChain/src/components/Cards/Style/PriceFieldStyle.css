@@ -6,6 +6,7 @@
     top: 90%;
     left: 60%;
     transform: translate(-50%, -50%);
+    
 }
 .value-field{
     display: flex;
@@ -17,6 +18,9 @@
     letter-spacing: 1px;
     padding: 5px;
     outline: 0;
+    justify-content: flex-end;
+    padding: 5px;
+    
 
 }
 .price-field-button {

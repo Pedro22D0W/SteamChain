@@ -6,7 +6,7 @@ const GameCard = (props) => {
     return (
         <div className='game-card-style'>
 
-            <img src={props.poster} alt="" />
+            <img src={props.image} alt="" />
 
             <div>
                  <PriceField {...props} />
