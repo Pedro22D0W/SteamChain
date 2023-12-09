@@ -49,6 +49,16 @@ public class UserController {
             List<GameResponseDTO> Games_List = GameRepository.findByUsers(user).stream().map(GameResponseDTO::new).toList();
             return Games_List;
         }
+     @GetMapping("/publishedgames")
+    @Transactional
+        public List<GameResponseDTO> publishedGames(Authentication authentication){
+            String username = authentication.getName();
+            User user = repository.findByUsername(username);
+
+            //User user = repository.findByid(user_id);
+            List<GameResponseDTO> Games_List = user.getPublishedGames().stream().map(GameResponseDTO::new).toList();
+            return Games_List;
+        }
         @GetMapping("/verifygame/{user_id}/{game_id}")
     @Transactional
         public Boolean userVerifyGame(@PathVariable Long user_id,@PathVariable Long game_id){

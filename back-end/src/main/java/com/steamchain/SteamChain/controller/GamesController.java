@@ -10,6 +10,8 @@ import com.steamchain.SteamChain.Games.Game;
 import com.steamchain.SteamChain.Games.GameRegisterDTO;
 import com.steamchain.SteamChain.Games.GameRepository;
 import com.steamchain.SteamChain.Games.GameResponseDTO;
+import com.steamchain.SteamChain.User.User;
+import com.steamchain.SteamChain.User.UserRepository;
 
 @RestController
 @RequestMapping("games")
@@ -19,6 +21,8 @@ import com.steamchain.SteamChain.Games.GameResponseDTO;
 public class GamesController {
     @Autowired
     private GameRepository repository;
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/all")
     public List<GameResponseDTO> getGames() {
@@ -36,8 +40,14 @@ public class GamesController {
 
     public ResponseEntity<String> postGame(@RequestBody GameRegisterDTO gameRegisterDTO) {
 
-        Game newGame = new Game(gameRegisterDTO);
+         User user = userRepository.findByid(gameRegisterDTO.user_id());
+        Game newGame = new Game(gameRegisterDTO,user);
         this.repository.save(newGame);
+
+        List<Game> publishedGames = user.getPublishedGames();
+        publishedGames.add(newGame);
+        user.setPublishedGames(publishedGames);
+        userRepository.save(user);
 
         return new ResponseEntity<>("Post criado com sucesso!", HttpStatus.CREATED);
     }

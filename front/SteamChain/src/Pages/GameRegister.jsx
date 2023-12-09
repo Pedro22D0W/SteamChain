@@ -35,7 +35,7 @@ const GameRegister = () => {
   const create = async (event) => {
     try {
       event.preventDefault();
-      const response = await createGame(name, link_poster, link_trailer, about, account, price);
+      const response = await createGame(name, link_poster, link_trailer, about, account, price,localStorage.getItem('userId'));
       return Navigate('/developer');
       
     } catch (error) {

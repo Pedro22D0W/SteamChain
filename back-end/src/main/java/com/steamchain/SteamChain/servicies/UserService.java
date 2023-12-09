@@ -25,7 +25,6 @@ public class UserService {
 
         List<Game> purchasedGames = user.getGames();
         purchasedGames.add(game);
-        System.out.println(purchasedGames);
         user.setPurchasedGames(purchasedGames);
         userRepository.save(user);
 

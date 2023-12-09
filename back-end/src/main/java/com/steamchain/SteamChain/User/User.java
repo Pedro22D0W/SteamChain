@@ -49,6 +49,9 @@ public class User implements UserDetails {
         if (games == null) {
             games = new ArrayList<>();
         }
+        if (publishedGames == null) {
+            publishedGames = new ArrayList<>();
+        }
     }
 
     @Id
@@ -63,6 +66,9 @@ public class User implements UserDetails {
     @ManyToMany
     @JoinTable(name = "user_game", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
     private List<Game> games;
+
+    @OneToMany(mappedBy = "user")
+    private List<Game> publishedGames;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -113,6 +119,10 @@ public class User implements UserDetails {
 
     public void setPurchasedGames(List<Game> purchasedGames) {
         this.games = purchasedGames;
+    }
+
+    public void setPublishedGames(List<Game> publishedGames) {
+        this.publishedGames = publishedGames;
     }
 
 }

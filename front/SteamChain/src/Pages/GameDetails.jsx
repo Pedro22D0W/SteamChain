@@ -9,24 +9,26 @@ import { useParams } from 'react-router-dom';
 import { getGameDetails } from '../Service/DataService.js';
 import { buy, download, verify } from '../Service/StoreService.js';
 import { Link, useNavigate } from "react-router-dom";
+import ethereum from '../Assets/ethereum.svg';
 
 
 
 const GameDetails = (props) => {
-    
+
     const Navigate = useNavigate();
     const { id } = useParams();
     const [Game, setGame] = useState(null);
     const [userHasGame, setUserHasGame] = useState(false);
 
     const getDetails = async () => {
-      try {
-        const gameData = await getGameDetails(id);
-        setGame(gameData);
+        try {
+            const gameData = await getGameDetails(id);
+            setGame(gameData);
+            console.log(gameData);
 
-      } catch (error) {
-        console.error('Erro ao obter dados:', error);
-      }
+        } catch (error) {
+            console.error('Erro ao obter dados:', error);
+        }
     };
 
     const buyGame = async () => {
@@ -41,8 +43,8 @@ const GameDetails = (props) => {
     }
     const HasGame = async () => {
         try {
-           
-            const response = await verify(localStorage.getItem('userId'),id);
+
+            const response = await verify(localStorage.getItem('userId'), id);
             if (response) {
                 setUserHasGame(true);
             }
@@ -53,7 +55,7 @@ const GameDetails = (props) => {
 
     const downloadGame = async () => {
         try {
-            
+
             const response = await download();
             if (response) {
                 setUserHasGame(true);
@@ -65,54 +67,54 @@ const GameDetails = (props) => {
 
 
     useEffect(() => {
-       getDetails();
-       HasGame();
+        getDetails();
+        HasGame();
     }, [id]);
-   
+
     return (
         <div className="App">
 
             <CardCenter>
 
                 <div style={{ display: 'flex', flexDirection: ' column', padding: '8vh', margin: " 0 20vh 0 ", alignContent: "center" }} >
-                    <div style={{ display: 'flex', flexDirection: 'row', alignContent: "center", margin:"0 0 5vh 0" }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignContent: "center", margin: "0 0 5vh 0" }}>
 
-                        <div style = {{ display: 'flex', flexDirection: ' column', }}>
+                        <div style={{ display: 'flex', flexDirection: ' column', }}>
                             <GameCard image={Game?.poster} />
-                           
-                           
-                            { !userHasGame && (
-                                <Button onClick={() => buyGame()}>Comprar</Button>
-                            )}                     
-                            { userHasGame && (
+
+
+                            {!userHasGame && (
+                                <Button onClick={() => buyGame()}><div style={{ display: "flex", flexDirection: "row",alignItems: "center" }}><a style={{color: "#FFFFFF", marginRight: "8px"}}>Comprar</a>{Game?.price}<img src={ethereum} alt="" style={{ maxWidth: '2vh',marginLeft: "4px" }} /></div></Button>
+                            )}
+                            {userHasGame && (
                                 <Button onClick={() => downloadGame()}>Download</Button>
                             )}
-                           
-                        </div>      
 
-                        <div sytle = {{ margin:"20vh" }}>
+                        </div>
+
+                        <div sytle={{ maxWidth: "100%"}}>
                             <ReactPlayer
                                 url={Game?.trailer}
-                                width='220%'
-                                height='105%'
-                                margin='0 0 0 0'
-                                controls={true} // Adicione essa propriedade se quiser exibir controles de reprodução
+                                Width='100%'
+                                height='60vh'
+                                margin='20px 0 0 0'
+                                controls={true}
                             />
                         </div>
 
-                    </div> 
-                    <div sytle = {{ margin:"20vh 0 0 0" }}>
-
-                    
-                    <CardCenter>
-                    <div style={{ display: 'flex', flexDirection: ' column', padding: '8vh',maxHeight: "20vn"}}>
-                        <h1>{Game?.name}</h1>
-                        <a>{Game?.about}</a>
-                        
-                        
                     </div>
-                   </CardCenter>
-                   </div>
+                    <div sytle={{ margin: "20vh 0 0 0" }}>
+
+
+                        <CardCenter>
+                            <div style={{ display: 'flex', flexDirection: ' column', padding: '8vh', maxHeight: "20vn" }}>
+                                <h1>{Game?.name}</h1>
+                                <a>{Game?.about}</a>
+
+
+                            </div>
+                        </CardCenter>
+                    </div>
                 </div>
 
             </CardCenter>

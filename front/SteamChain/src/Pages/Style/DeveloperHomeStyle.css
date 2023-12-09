@@ -18,3 +18,9 @@
     transform: scale(1.05);
    
 }
+
+.grid-list{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+}

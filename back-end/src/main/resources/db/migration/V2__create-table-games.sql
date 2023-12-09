@@ -5,5 +5,7 @@ CREATE TABLE IF NOT EXISTS games (
     trailer VARCHAR(255),
     about TEXT,
     wallet VARCHAR(255),
-    price INT
+    price INT,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );

@@ -5,7 +5,7 @@ import CardCenter from '../components/Cards/CardCenter';
 import Button from '../components/forms/Button';
 import { Link } from 'react-router-dom';
 import GameCard from '../components/Cards/GameCard';
-import { getGames, getUser,getUserGames } from '../Service/DataService.js';
+import { getGames, getUser, getUserGames } from '../Service/DataService.js';
 import './Style/DeveloperHomeStyle.css';
 
 
@@ -13,25 +13,25 @@ const DeveloperHome = () => {
   const [user, setUser] = useState(null);
   const [Games, setGames] = useState(null);
   const [UserGames, setUserGames] = useState(null);
+  const [PublishedGames, setPublishedGames] = useState(null);
 
   const FindUser = async () => {
     try {
       const response = await getUser(localStorage.getItem('token'));
       setUser(response);
       localStorage.setItem('userId', response.id);
-      console.log(localStorage.getItem('userId'));
-      }
-      catch (error) {
+    }
+    catch (error) {
       console.error('Erro ao obter dados do banco:');
     }
   }
-  
+
   const FindGames = async () => {
     try {
       const response = await getGames();
       setGames(response);
-      }
-      catch (error) {
+    }
+    catch (error) {
       console.error('Erro ao encorar os jogos:');
     }
   }
@@ -40,9 +40,19 @@ const DeveloperHome = () => {
     try {
       const response = await getUserGames(localStorage.getItem('token'));
       setUserGames(response);
+    }
+    catch (error) {
+      console.error('Erro ao obter dados do banco:');
+    }
+  }
+
+  const FindPublishedGames = async () => {
+    try {
+      const response = await getUserGames(localStorage.getItem('token'));
+      setPublishedGames(response);
       console.log(response);
-      }
-      catch (error) {
+    }
+    catch (error) {
       console.error('Erro ao obter dados do banco:');
     }
   }
@@ -57,6 +67,7 @@ const DeveloperHome = () => {
   useEffect(() => {
     FindUser();
     FindUserGames();
+    FindPublishedGames();
     FindGames();
   }, []);
 
@@ -82,7 +93,7 @@ const DeveloperHome = () => {
 
       <CardCenter style={{ margin: '100px ', }}>
         {aba === 1 && (
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div className='grid-list'>
             {UserGames?.map((game) => (
               <GameCard key={game.id} image={game?.poster} {...game} />
             ))}
@@ -92,26 +103,37 @@ const DeveloperHome = () => {
 
         {aba === 2 && (
           <div>
-          <h1>{user?.username}!</h1>
-          {user?.password}
-          {user?.email}
-          <Button><Link style={{ color: '#FFFFFF' }} to="/gameregister">Adicionar Jogo +</Link></Button>
-        </div>
+            <div>
+              <h1>{user?.username}!</h1>
+              {user?.password}
+              {user?.email}
+              <Button><Link style={{ color: '#FFFFFF' }} to="/gameregister">Adicionar Jogo +</Link></Button>
+            </div>
+            <div className='grid-list'>
+              {UserGames?.map((game) =>
+                // Verifica se o user_id do jogo é igual ao user_id desejado
+                game.user_id === localStorage.getItem("userId") && (
+                  <GameCard key={game.id} image={game?.poster} {...game} />
+                )
+              )}
+            </div>
+          </div>
+
         )}
 
         {aba === 3 && (
           <div>
             <h1>LOJA!</h1>
 
-            <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div className='grid-list'>
               {Games?.map((game) => (
-              <GameCard image={game?.poster} {...game} />
-            ))}
+                <GameCard image={game?.poster} {...game} />
+              ))}
             </div>
-            
-            
+
+
           </div>
-          
+
         )}
 
 

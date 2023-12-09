@@ -73,10 +73,28 @@ export const getUserGames = async (token) => {
   }
 };
 
-export const createGame = async (name,poster,trailer,about,wallet,price) => {
+export const publishedGames = async (token) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/user/publishedgames"`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    console.log(response.data)
+    return response.data;
+    
+  } catch (error) {
+    console.error('Erro ao obter os jogos:', error);
+    return null;
+  }
+};
+
+export const createGame = async (name,poster,trailer,about,wallet,price,user_id) => {
     try {
        
-      const data =JSON.stringify({ name,poster,trailer,about,wallet,price});
+      const data =JSON.stringify({ name,poster,trailer,about,wallet,price,user_id});
       console.log(data)
         const response = await axios.post(
             `${API_BASE_URL}/games/create`,data
