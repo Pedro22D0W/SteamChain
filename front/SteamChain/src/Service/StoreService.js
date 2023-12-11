@@ -48,7 +48,7 @@ const API_BASE_URL = 'http://localhost:8080';
             export const download = async () => {
                 try {
                   const response = await axios.get(
-                    `${API_BASE_URL}/api/file/download/kaze-and-the-wild-masks.png`,
+                    `${API_BASE_URL}/api/file/download/DOWNLOAD_CONCLUIDO.png`,
                     {
                       responseType: 'blob',  
                       headers: {
@@ -60,7 +60,7 @@ const API_BASE_URL = 'http://localhost:8080';
                   const url = window.URL.createObjectURL(new Blob([response.data]));
                   const link = document.createElement('a');
                   link.href = url;
-                  link.setAttribute('download', 'kaze-and-the-wild-masks.png'); 
+                  link.setAttribute('download', 'DOWNLOAD_CONCLUIDO.png'); 
                   
                   // Adiciona o link ao documento e simula um clique
                   document.body.appendChild(link);

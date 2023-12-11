@@ -67,7 +67,8 @@ public class User implements UserDetails {
     @JoinTable(name = "user_game", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "game_id"))
     private List<Game> games;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
+    @JoinColumn(name = "publisher")
     private List<Game> publishedGames;
 
     @Override
@@ -79,6 +80,32 @@ public class User implements UserDetails {
         }
     }
 
+    public void setPurchasedGames(List<Game> purchasedGames) {
+        this.games = purchasedGames;
+    }
+
+    public void setPublishedGames(List<Game> publishedGames) {
+        this.publishedGames = publishedGames;
+    }
+
+
+    public List<Game> getPublishedGames() {
+        return publishedGames;
+    }
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+     public void setGames(List<Game> games) {
+        this.games = games;
+    }
+
+    
+
+    //SPRING SECURITY
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public String getPassword() {
         return password;
@@ -87,14 +114,6 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
-    }
-
-    public List<Game> getGames() {
-        return games;
-    }
-
-    public void setGames(List<Game> games) {
-        this.games = games;
     }
 
     @Override
@@ -117,12 +136,6 @@ public class User implements UserDetails {
         return true;
     }
 
-    public void setPurchasedGames(List<Game> purchasedGames) {
-        this.games = purchasedGames;
-    }
-
-    public void setPublishedGames(List<Game> publishedGames) {
-        this.publishedGames = publishedGames;
-    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  
 
 }

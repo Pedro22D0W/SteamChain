@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS games (
     about TEXT,
     wallet VARCHAR(255),
     price INT,
-    user_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id)
+    publisher INT,
+    FOREIGN KEY (publisher) REFERENCES users(id)
 );

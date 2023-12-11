@@ -40,14 +40,14 @@ public class GamesController {
 
     public ResponseEntity<String> postGame(@RequestBody GameRegisterDTO gameRegisterDTO) {
 
-         User user = userRepository.findByid(gameRegisterDTO.user_id());
+        User user = userRepository.findByid(gameRegisterDTO.publisher());
         Game newGame = new Game(gameRegisterDTO,user);
-        this.repository.save(newGame);
-
+        
         List<Game> publishedGames = user.getPublishedGames();
         publishedGames.add(newGame);
         user.setPublishedGames(publishedGames);
-        userRepository.save(user);
+        this.repository.save(newGame);
+        this.userRepository.save(user);
 
         return new ResponseEntity<>("Post criado com sucesso!", HttpStatus.CREATED);
     }

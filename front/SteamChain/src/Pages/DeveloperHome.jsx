@@ -5,7 +5,7 @@ import CardCenter from '../components/Cards/CardCenter';
 import Button from '../components/forms/Button';
 import { Link } from 'react-router-dom';
 import GameCard from '../components/Cards/GameCard';
-import { getGames, getUser, getUserGames } from '../Service/DataService.js';
+import { getGames, getUser, getUserGames,publishedGames } from '../Service/DataService.js';
 import './Style/DeveloperHomeStyle.css';
 
 
@@ -48,7 +48,7 @@ const DeveloperHome = () => {
 
   const FindPublishedGames = async () => {
     try {
-      const response = await getUserGames(localStorage.getItem('token'));
+      const response = await publishedGames(localStorage.getItem('token'));
       setPublishedGames(response);
       console.log(response);
     }
@@ -110,7 +110,7 @@ const DeveloperHome = () => {
               <Button><Link style={{ color: '#FFFFFF' }} to="/gameregister">Adicionar Jogo +</Link></Button>
             </div>
             <div className='grid-list'>
-              {UserGames?.map((game) =>
+              {PublishedGames?.map((game) =>
                 // Verifica se o user_id do jogo é igual ao user_id desejado
                 
                   <GameCard key={game.id} image={game?.poster} {...game} />

@@ -75,7 +75,7 @@ export const getUserGames = async (token) => {
 
 export const publishedGames = async (token) => {
   try {
-    const response = await axios.get(`${API_BASE_URL}/user/publishedgames"`, {
+    const response = await axios.get(`${API_BASE_URL}/user/publishedgames`, {
       headers: {
         'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -91,10 +91,10 @@ export const publishedGames = async (token) => {
   }
 };
 
-export const createGame = async (name,poster,trailer,about,wallet,price,user_id) => {
+export const createGame = async (name,poster,trailer,about,wallet,price,publisher) => {
     try {
        
-      const data =JSON.stringify({ name,poster,trailer,about,wallet,price,user_id});
+      const data =JSON.stringify({ name,poster,trailer,about,wallet,price,publisher});
       console.log(data)
         const response = await axios.post(
             `${API_BASE_URL}/games/create`,data

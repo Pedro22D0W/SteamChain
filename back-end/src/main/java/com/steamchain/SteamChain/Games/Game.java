@@ -32,7 +32,7 @@ public class Game {
         this.wallet = gameRegisterDTO.wallet();
         this.price = gameRegisterDTO.price();
         this.users = Collections.emptyList();
-        this.user = user;
+        this.publisher = user;
     }
 
     @Id
@@ -47,11 +47,12 @@ public class Game {
     @ManyToMany(mappedBy = "games")
     private List<User> users;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "publisher")
+    private User publisher;
+
 public Long getUserId() {
-    if (this.user == null) {
-        return this.user.getId();
+    if (this.publisher == null) {
+        return this.publisher.getId();
     }  
     return 1L;
 }

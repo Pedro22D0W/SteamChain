@@ -59,6 +59,7 @@ public class UserController {
             List<GameResponseDTO> Games_List = user.getPublishedGames().stream().map(GameResponseDTO::new).toList();
             return Games_List;
         }
+
         @GetMapping("/verifygame/{user_id}/{game_id}")
     @Transactional
         public Boolean userVerifyGame(@PathVariable Long user_id,@PathVariable Long game_id){
