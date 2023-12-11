@@ -3,10 +3,10 @@ package com.steamchain.SteamChain.Games;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 
 import com.steamchain.SteamChain.User.User;
-import com.steamchain.SteamChain.User.UserRepository;
+
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import CardCenter from '../components/Cards/CardCenter';
-import InputField from '../components/forms/InputField';
+import InputField from '../components/Forms/InputField';
 import Button from '../components/forms/Button';
 import { useState } from 'react';
 import { createGame } from '../Service/DataService.js';

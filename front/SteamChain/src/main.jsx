@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import DeveloperHome from './pages/DeveloperHome.jsx';
-import GameDetails from './pages/GameDetails.jsx'
-import GameRegister from './pages/GameRegister.jsx'
-import { useParams } from 'react-router-dom';
+import Login from './Pages/Login.jsx';
+import Register from './Pages/Register.jsx';
+import DeveloperHome from './Pages/DeveloperHome.jsx';
+import GameDetails from './Pages/GameDetails.jsx'
+import GameRegister from './Pages/GameRegister.jsx'
+
 
 
 const router = createBrowserRouter([

@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import button from './forms/Style/ButtonStyle.css';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 

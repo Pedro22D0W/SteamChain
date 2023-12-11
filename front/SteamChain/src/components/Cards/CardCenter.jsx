@@ -1,4 +1,4 @@
-import CardCenterStyle from './Style/CardCenterStyle.css';
+import './Style/CardCenterStyle.css';
 
 const CardCenter = (props) => {
     return (

@@ -1,6 +1,6 @@
 import React from 'react';
 import PriceField from './PriceField';
-import GameCardStyle from './Style/GameCardStyle.css';
+import './Style/GameCardStyle.css';
 
 const GameCard = (props) => {
     return (

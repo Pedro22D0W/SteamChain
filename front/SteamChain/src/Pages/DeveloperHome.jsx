@@ -112,9 +112,9 @@ const DeveloperHome = () => {
             <div className='grid-list'>
               {UserGames?.map((game) =>
                 // Verifica se o user_id do jogo é igual ao user_id desejado
-                game.user_id === localStorage.getItem("userId") && (
+                
                   <GameCard key={game.id} image={game?.poster} {...game} />
-                )
+                
               )}
             </div>
           </div>

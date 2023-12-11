@@ -1,4 +1,4 @@
-import InputFieldStyle from './Style/InputFieldStyle.css';
+import './Style/InputFieldStyle.css';
 
 function InputField(props) {
   return (
